@@ -190,31 +190,41 @@ def find_a_coach():
 
 
 def request_workout():
-    if __name__ == '__main__':
-        host = '127.0.0.1'
-        port = 8080
+    layout = [[sg.Text("Enter Profile Filename (default is profile.txt): ", size=(30, 3), font=16),
+               sg.InputText()],
+              [sg.Button("Submit"), sg.Button("Cancel")]]
 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # Connecting with Server
-        sock.connect((host, port))
+    window = sg.Window("Request a Workout Page", layout)
 
-        while True:
-            filename = input('Input filename you want to send: ')
-            try:
-                # Reading file and sending data to server
-                fi = open(filename, "r")
+    while True:
+        event, values = window.read()
+        if event == "Cancel" or event == sg.WIN_CLOSED:
+            break
+        elif event == "Submit":
+            host = '127.0.0.1'
+            port = 8080
+
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # Connecting with Server
+            sock.connect((host, port))
+
+            filename = values[0]
+
+            # Reading file and sending data to server
+            fi = open(filename, "r")
+            data = fi.read()
+            if not data:
+                break
+            while data:
+                sock.send(str(data).encode())
                 data = fi.read()
-                if not data:
-                    break
-                while data:
-                    sock.send(str(data).encode())
-                    data = fi.read()
-                    # File is closed after data is sent
-                fi.close()
+                # File is closed after data is sent
+            fi.close()
+            break
+    window.close()
 
-            except IOError:
-                print('You entered an invalid filename!\
-                Please enter a valid name')
+
+
 
 
 def login():

@@ -1,4 +1,5 @@
 import socket
+import json
 
 if __name__ == '__main__':
     # Defining Socket
@@ -17,7 +18,6 @@ if __name__ == '__main__':
         connections.append(conn)
         print('Connected with client', i + 1)
 
-    fileno = 0
     idx = 0
     for conn in connections:
         # Receiving File Data
@@ -26,9 +26,13 @@ if __name__ == '__main__':
 
         if not data:
             continue
+
+        string = json.loads(data)
+        un = ''
+        for i in string['-username-']:
+            un += i
         # Creating a new file at server end and writing the data
-        filename = 'output' + str(fileno) + '.txt'
-        fileno = fileno + 1
+        filename = str(un) + '_profile' + '.txt'
         fo = open(filename, "w")
         while data:
             if not data:
