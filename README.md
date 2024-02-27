@@ -34,3 +34,4 @@ as you'd like in your own program or modify the Sample.py program for your own n
 ## UML Sequence Diagram 
 See the diagram below for further explanation of how these two programs communicate using Python Sockets. 
 
+![img.png](img.png)
