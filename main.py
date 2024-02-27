@@ -211,6 +211,7 @@ def request_workout():
             filename = values[0]
 
             # Reading file and sending data to server
+            print("Sending profile to sample program")
             fi = open(filename, "r")
             data = fi.read()
             if not data:
@@ -220,11 +221,9 @@ def request_workout():
                 data = fi.read()
                 # File is closed after data is sent
             fi.close()
+            print("Profile sent successfully. You will receive a workout shortly.")
             break
     window.close()
-
-
-
 
 
 def login():
