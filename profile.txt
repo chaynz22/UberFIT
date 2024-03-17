@@ -1,1 +1,1 @@
-{"-username-": "alh", "-typemenu-": "Athlete", "-levelmenu-": "Beginner", "-goalsmenu-": "Endurance", "-TODmenu-": "Morning"}
+{"-username-": "alh", "-password-": "123", "-typemenu-": "Athlete", "-levelmenu-": "Beginner", "-goalsmenu-": "Build Muscle", "-radiusmenu-": "10 mi", "-TODmenu-": "Morning"}

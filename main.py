@@ -209,25 +209,23 @@ def find_a_coach():
 
 
 def request_workout_window():
-    layout = [[sg.Text("Enter Workout Type (Endurance, Hybrid, or Build Muscle): ", size=(30, 3)),
+    layout = [[sg.Text("Enter Workout Type (Endurance, Hybrid, or Build Muscle): ", size=(30, 2)),
                sg.Input(key='-programName-', do_not_clear=True, size=(20, 1))],
+              [sg.Text('Monday: ', size=(10, 1)), sg.Text(size=(50, 3), justification='left', key='-MONDAY-')],
+              [sg.Text('Tuesday: ', size=(10, 1)), sg.Text(size=(50, 3), justification='left', key='-TUESDAY-')],
+              [sg.Text('Wednesday: ', size=(10, 1)), sg.Text(size=(50, 3), justification='left', key='-WEDNESDAY-')],
+              [sg.Text('Thursday: ', size=(10, 1)), sg.Text(size=(50, 3), justification='left', key='-THURSDAY-')],
+              [sg.Text('Friday: ', size=(10, 1)), sg.Text(size=(50, 3), justification='left', key='-FRIDAY-')],
+              [sg.Text('Saturday: ', size=(10, 1)), sg.Text(size=(50, 3), justification='left', key='-SATURDAY-')],
+              [sg.Text('Sunday: ', size=(10, 1)), sg.Text(size=(50, 3), justification='left', key='-SUNDAY-')],
               [sg.Button("Request Workout"), sg.Button("Cancel")],
-              [sg.Text('Monday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-MONDAY-')],
-              [sg.Text('Tuesday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-TUESDAY-')],
-              [sg.Text('Wednesday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-WEDNESDAY-')],
-              [sg.Text('Thursday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-THURSDAY-')],
-              [sg.Text('Friday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-FRIDAY-')],
-              [sg.Text('Saturday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-SATURDAY-')],
-              [sg.Text('Sunday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-SUNDAY-')],
               ]
-
     window = sg.Window("Request a Workout Page", layout)
     return window
 
 
 def request_workout():
     window = request_workout_window()
-
     while True:
         event, values = window.read()
         if event == "Cancel" or event == sg.WIN_CLOSED:
@@ -261,7 +259,6 @@ def build_login_window():
 def login():
     global username, password
     window = build_login_window()
-
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:
@@ -275,7 +272,6 @@ def login():
                     break
                 elif values['-username-'] != username or values['-password-'] != password:
                     sg.popup("Invalid login. Try again")
-
     window.close()
 
 
