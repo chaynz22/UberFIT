@@ -1,1 +1,1 @@
-{"-username-": "alh", "-typemenu-": "", "-levelmenu-": "", "-goalsmenu-": "", "-TODmenu-": ""}
+{"-username-": "alh", "-typemenu-": "Athlete", "-levelmenu-": "Beginner", "-goalsmenu-": "Endurance", "-TODmenu-": "Morning"}

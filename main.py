@@ -54,9 +54,13 @@ def create_account_window():
 
 
 def save_settings(values):
-    profile = {'-username-': values['-username-'], '-typemenu-': values['-typemenu-'],
-               '-levelmenu-': values['-levelmenu-'], '-goalsmenu-': values['-goalsmenu-'],
+    global username, password
+    profile = {'-username-': values['-username-'], '-password-': values['-password-'],
+               '-typemenu-': values['-typemenu-'], '-levelmenu-': values['-levelmenu-'],
+               '-goalsmenu-': values['-goalsmenu-'], '-radiusmenu-': values['-radiusmenu-'],
                '-TODmenu-': values['-TODmenu-']}
+    password = values['-password-']
+    username = values['-username-']
     f = open("profile.txt", 'w')
     json.dump(profile, f)
     f.close()
@@ -66,13 +70,16 @@ def load_settings(window):
     f = open("profile.txt", 'r')
     profile = json.load(f)
     window['-username-'].update(value=profile['-username-'])
+    window['-password-'].update(value=profile['-password-'])
     window['-typemenu-'].update(value=profile['-typemenu-'])
     window['-levelmenu-'].update(value=profile['-levelmenu-'])
     window['-goalsmenu-'].update(value=profile['-goalsmenu-'])
+    window['-radiusmenu-'].update(value=profile['-radiusmenu-'])
     window['-TODmenu-'].update(value=profile['-TODmenu-'])
 
 
 def create_account():
+    global username, password
     window = create_account_window()
     while True:
         event, values = window.read()
@@ -80,10 +87,8 @@ def create_account():
             save_settings(values)
             sg.popup("Settings saved. Click 'ok' to continue")
             break
-
         elif event == 'LoadSettings':
             load_settings(window)
-
         elif event in ('Cancel', None):
             break
         else:
@@ -207,7 +212,7 @@ def request_workout_window():
     layout = [[sg.Text("Enter Workout Type (Endurance, Hybrid, or Build Muscle): ", size=(30, 3)),
                sg.Input(key='-programName-', do_not_clear=True, size=(20, 1))],
               [sg.Button("Request Workout"), sg.Button("Cancel")],
-              [sg.Text('Monday: ', size=(10, 1)), sg.Text(size=(100, 8), justification='left', key='-MONDAY-')],
+              [sg.Text('Monday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-MONDAY-')],
               [sg.Text('Tuesday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-TUESDAY-')],
               [sg.Text('Wednesday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-WEDNESDAY-')],
               [sg.Text('Thursday: ', size=(10, 1)), sg.Text(size=(100, 5), justification='left', key='-THURSDAY-')],
@@ -245,8 +250,8 @@ def build_login_window():
     layout = [[sg.Text("Welcome to UberFIT! If you have an account, please log in. "
                        "Otherwise, select 'Register' to set up a free account and start finding "
                        "coaches and athletes today!", size=(55, 3), font=40, justification='c')],
-              [sg.Text("Username", size=(15, 1), font=16), sg.InputText(key='-usrnm-', font=16)],
-              [sg.Text("Password", size=(15, 1), font=16), sg.InputText(key='-pwd-', password_char='*', font=16)],
+              [sg.Text("Username", size=(15, 1), font=16), sg.InputText(key='-username-', font=16)],
+              [sg.Text("Password", size=(15, 1), font=16), sg.InputText(key='-password-', password_char='*', font=16)],
               [sg.Button('Login'), sg.Button('Register')]]
 
     window = sg.Window("Log In", layout)
@@ -254,6 +259,7 @@ def build_login_window():
 
 
 def login():
+    global username, password
     window = build_login_window()
 
     while True:
@@ -264,10 +270,10 @@ def login():
             create_account()
         else:
             if event == "Login":
-                if values['-usrnm-'] == username and values['-pwd-'] == password:
+                if values['-username-'] == username and values['-password-'] == password:
                     welcome_page()
                     break
-                elif values['-usrnm-'] != username or values['-pwd-'] != password:
+                elif values['-username-'] != username or values['-password-'] != password:
                     sg.popup("Invalid login. Try again")
 
     window.close()
